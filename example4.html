@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas{
+            background-color: beige;
+        }
+    </style>
+</head>
+<body>
+    <canvas width="500" height="300">
+
+    </canvas> <br>
+    <input type="range" max="255" min="0" id="red">
+    <input type="range" max="255" min="0" id="green">
+    <input type="range" max="255" min="0" id="blue"> 
+    <br>
+    <p>some what "random" generator</p>
+    <p id="message"></p>
+    
+    
+
+    <script>
+        let c = document.querySelector('canvas')
+        if (c.getContext){
+            let ctx= c.getContext('2d')
+            function rgb(r, g, b){
+             return ["rgb(",r,",",g,",",b,")"].join("");
+            }
+            const tri1 = function(r){
+                
+                var w = 20
+                var i = 0
+                while(i < 23){
+                    
+                    
+                    ctx.beginPath()
+                    ctx.moveTo(((w*i)+20), (r*30)+20)
+                    ctx.lineTo(((w*i)+20), (r*30)+50)
+                    ctx.lineTo(((w*i)+40), (r*30)+50)
+                    ctx.lineTo(((w*i)+20), (r*30)+20)
+                    ctx.closePath()
+                    ctx.stroke()
+                    ctx.fill()
+                    i++
+
+                }
+            }
+            const tri2 = function(r){
+                var w = 20
+                var i = 0
+                while(i < 23){
+                    
+                    
+                    ctx.beginPath()
+                    ctx.moveTo(((w*i)+20), (r*30)+20)
+                    ctx.lineTo(((w*i)+40), (r*30)+20)
+                    ctx.lineTo(((w*i)+40), (r*30)+50)
+                    ctx.lineTo(((w*i)+20), (r*30)+20)
+                    ctx.closePath()
+                    ctx.stroke()
+                    ctx.fill()
+                    i++
+
+                }
+            }
+
+            triangles = function(){
+                ctx.clearRect(0,0,500,300)
+                var startr = document.getElementById('red').value
+                var startg = document.getElementById('green').value
+                var startb = document.getElementById('blue').value
+                
+                ctx.fillStyle = rgb(startr,startg,startb)
+                for(let i = 1; i<6; i++){
+                    tri1(i)
+                    tri2(i)
+                }
+                let result = biggestvalue()
+                document.getElementById("message").innerHTML = result
+                
+            }
+
+            function biggestvalue(){
+                let result
+                let red = document.getElementById('red').value
+                let green = document.getElementById('green').value
+                let blue = document.getElementById('blue').value
+                
+                if (red > blue && red > green){
+                    result = "The biggest to smallest RGB values: Red is the biggest"
+                }
+                else if (green > blue && green > red){
+                    result = "The biggest to smallest RGB values: Green is the biggest"
+                }
+                
+                else if (blue > red && blue > green){
+                    result = "The biggest to smallest RGB values: Blue is the biggest"
+                }
+                else{
+                    result = "none are bigger then each other"
+                }
+                return result
+            }
+
+            document.getElementById('red').onchange = triangles
+            document.getElementById('green').onchange = triangles
+            document.getElementById('blue').onchange = triangles
+
+            
+
+            
+            
+            
+
+
+
+
+        }    
+        </script>
+</body>
+</html>
